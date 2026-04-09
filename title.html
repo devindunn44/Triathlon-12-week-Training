@@ -1,0 +1,1137 @@
+`html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>12-Week Olympic Triathlon Plan</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f7;
+      color: #222;
+    }
+    header {
+      background: #0b5ed7;
+      color: #fff;
+      padding: 1rem 1.5rem;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 1.4rem;
+    }
+    header p {
+      margin: 0.25rem 0 0;
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      padding: 0.5rem;
+      background: #e9ecef;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .tab-btn {
+      border: none;
+      padding: 0.4rem 0.7rem;
+      border-radius: 999px;
+      background: #dee2e6;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+    .tab-btn.active {
+      background: #0b5ed7;
+      color: #fff;
+      font-weight: 600;
+    }
+    main {
+      padding: 1rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .day {
+      background: #fff;
+      border-radius: 0.5rem;
+      padding: 0.75rem 0.9rem;
+      margin-bottom: 0.6rem;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+    }
+    .day-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.35rem;
+    }
+    .day-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .day-type {
+      font-size: 0.8rem;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .workout-text {
+      font-size: 0.85rem;
+      line-height: 1.4;
+      margin-bottom: 0.4rem;
+    }
+    .check-row {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+    }
+    .check-row input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+    }
+    .week-progress {
+      margin: 0.5rem 0 0;
+      font-size: 0.8rem;
+      color: #444;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: #e9ecef;
+      overflow: hidden;
+      margin-top: 0.25rem;
+    }
+    .progress-bar-inner {
+      height: 100%;
+      background: #0b5ed7;
+      width: 0%;
+      transition: width 0.2s ease-out;
+    }
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0.5rem 0 0.4rem;
+    }
+    .log-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    .card {
+      background: #fff;
+      border-radius: 0.5rem;
+      padding: 0.75rem 0.9rem;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+      font-size: 0.85rem;
+    }
+    label {
+      display: block;
+      font-size: 0.8rem;
+      margin-bottom: 0.15rem;
+      color: #444;
+    }
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      padding: 0.35rem 0.4rem;
+      border-radius: 0.35rem;
+      border: 1px solid #ced4da;
+      font-size: 0.85rem;
+      box-sizing: border-box;
+    }
+    .inline-inputs {
+      display: flex;
+      gap: 0.4rem;
+    }
+    .inline-inputs > div {
+      flex: 1;
+    }
+    .small {
+      font-size: 0.75rem;
+      color: #666;
+      margin-top: 0.25rem;
+    }
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.3rem;
+      font-size: 0.85rem;
+    }
+    .metric-label {
+      font-weight: 500;
+    }
+    .metric-value {
+      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    .metric-bar {
+      height: 5px;
+      border-radius: 999px;
+      background: #e9ecef;
+      overflow: hidden;
+      margin-bottom: 0.4rem;
+    }
+    .metric-bar-inner {
+      height: 100%;
+      background: #20c997;
+      width: 0%;
+      transition: width 0.2s ease-out;
+    }
+    .btn-row {
+      margin-top: 0.5rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    button.primary {
+      border: none;
+      background: #0b5ed7;
+      color: #fff;
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.4rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    button.secondary {
+      border: 1px solid #adb5bd;
+      background: #fff;
+      color: #333;
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.4rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Olympic Triathlon – 12 Week Plan</h1>
+  <p>Check off workouts, log times, and track progress toward a 3:00:00 finish.</p>
+</header>
+
+<div class="tabs" id="tabs"></div>
+
+<main id="content"></main>
+
+<script>
+  // --- CONFIG ---------------------------------------------------------
+
+  const GOALTOTALSECONDS = 3  60  60; // 3 hours
+
+  // Goal splits (you can tweak these)
+  const GOAL_SPLITS = {
+    swim: 30 * 60,   // 30:00
+    bike: 75 * 60,   // 1:15:00
+    run: 50 * 60,    // 50:00
+    transitions: 5 * 60 // 5:00 total
+  };
+
+  // Training plan extracted from your PDF (shortened descriptions but faithful)
+  // Each week: days Mon–Sun with type + text
+  const PLAN = [
+    {
+      week: 1,
+      block: "Block 1 – Building basic fitness",
+      days: [
+        {
+          name: "Mon",
+          type: "Swim",
+          text: "Easy swim, 30–40 mins. Warm-up with technique, then 400–600m easy–steady. Focus on getting metres in."
+        },
+        {
+          name: "Tue",
+          type: "Run",
+          text: "Easy run, 30–40 mins on soft surface. Start slowly, build to easy pace. Focus on cadence and not over-striding."
+        },
+        {
+          name: "Wed",
+          type: "Rest",
+          text: "Rest day. Massage or light stretching 20–30 mins. Consider professional bike fit if not comfortable."
+        },
+        {
+          name: "Thu",
+          type: "Bike",
+          text: "Easy bike, 75–90 mins (road or turbo). Focus on smooth pedalling and cadence 85–95 rpm."
+        },
+        {
+          name: "Fri",
+          type: "Swim + Core",
+          text: "Continuous swim, 40–50 mins, working on breathing pattern and rhythm. 20–30 mins lower abs and lower back."
+        },
+        {
+          name: "Sat",
+          type: "Brick",
+          text: "Bike 60 mins very easy + 20 min very easy run. Just get legs used to transitioning."
+        },
+        {
+          name: "Sun",
+          type: "Rest",
+          text: "Rest day. Lie in and recover from first week. Light stretching if tight."
+        }
+      ]
+    },
+    {
+      week: 2,
+      block: "Block 1 – Building basic fitness",
+      days: [
+        {
+          name: "Mon",
+          type: "Swim",
+          text: "Steady swim, 60 mins. Long reps, slightly faster than week 1, easy–steady pace."
+        },
+        {
+          name: "Tue",
+          type: "Run",
+          text: "Long easy run, 50–60 mins. Start very easy, hold form and high cadence. 10–15 mins stretching after."
+        },
+        {
+          name: "Wed",
+          type: "Bike",
+          text: "Steady turbo, 40–60 mins. 5 mins warm-up, single-leg drills, then 4–6 × 6 mins steady with 2 mins easy."
+        },
+        {
+          name: "Thu",
+          type: "Rest",
+          text: "Rest day."
+        },
+        {
+          name: "Fri",
+          type: "Run + Core",
+          text: "10–15 mins core, then 40–50 mins run building from recovery pace to high-end steady."
+        },
+        {
+          name: "Sat",
+          type: "Brick",
+          text: "Bike 75 mins steady + 30 mins steady run. Keep cadence up in first 5 mins of run off bike."
+        },
+        {
+          name: "Sun",
+          type: "Swim",
+          text: "Swim 45–60 mins, ideally with squad. Easy–steady, just getting metres in."
+        }
+      ]
+    },
+    {
+      week: 3,
+      block: "Block 1 – Building basic fitness",
+      days: [
+        {
+          name: "Mon",
+          type: "Run",
+          text: "Long run, 60–75 mins at easy pace. Take fluids. Aim for 1.2–1.5 × race distance."
+        },
+        {
+          name: "Tue",
+          type: "Swim + Core",
+          text: "Easy swim, 45 mins. Mix strokes and kick. 20–30 mins core, upper back, shoulders."
+        },
+        {
+          name: "Wed",
+          type: "Bike",
+          text: "Steady bike, 60–90 mins. Build aerobic endurance on undulating terrain."
+        },
+        {
+          name: "Thu",
+          type: "Swim",
+          text: "Progressive swim, 45–60 mins. Mid-length reps (150–300m) building from easy to tempo."
+        },
+        {
+          name: "Fri",
+          type: "Rest",
+          text: "Rest day. Update training diary and enjoy your improving fitness."
+        },
+        {
+          name: "Sat",
+          type: "Bike + Run",
+          text: "Long bike, 90 mins–2 hrs easy–steady on flat/undulating terrain. Stay seated on hills, cadence 90–95. 10–20 mins easy run off bike."
+        },
+        {
+          name: "Sun",
+          type: "Open-water Swim",
+          text: "Open-water swim, 45 mins very easy. Practise sighting and swimming around others."
+        }
+      ]
+    },
+    {
+      week: 4,
+      block: "Block 1 – Recovery week",
+      days: [
+        {
+          name: "Mon",
+          type: "Rest",
+          text: "Rest day. Recovery week to absorb training and prepare for next block."
+        },
+        {
+          name: "Tue",
+          type: "Swim",
+          text: "Technique swim, 30–40 mins. Focus on distance per stroke and balance in water."
+        },
+        {
+          name: "Wed",
+          type: "Rest",
+          text: "Rest day. Massage or 30 mins stretching. Service your bike if needed."
+        },
+        {
+          name: "Thu",
+          type: "Cross",
+          text: "S&C or yoga, 30–45 mins. Focus on lower abdominals and lower back."
+        },
+        {
+          name: "Fri",
+          type: "Run",
+          text: "Steady run, 30–40 mins. 5 mins easy, 20–30 mins steady, 5 mins easy."
+        },
+        {
+          name: "Sat",
+          type: "Brick",
+          text: "Bike 60–90 mins easy–steady on undulating/hilly terrain. Practise eating/drinking. Run 20–30 mins easy–steady."
+        },
+        {
+          name: "Sun",
+          type: "Bike",
+          text: "Easy spin, 45–60 mins. Flat or turbo, vary cadence but keep it easy."
+        }
+      ]
+    },
+    // --- Block 2: Weeks 5–8 ---
+    {
+      week: 5,
+      block: "Block 2 – Improving speed and endurance",
+      days: [
+        {
+          name: "Mon",
+          type: "Swim",
+          text: "Steady swim, 75 mins. Longer reps (200–400m), slightly faster than week 2. Increase distance by 10–15%."
+        },
+        {
+          name: "Tue",
+          type: "Run + Core",
+          text: "Progressive run, 40–50 mins. 10 mins light core, then increase pace every 10–12 mins to tempo."
+        },
+        {
+          name: "Wed",
+          type: "Optional",
+          text: "Optional 30–60 mins technique in your weakest discipline."
+        },
+        {
+          name: "Thu",
+          type: "Bike",
+          text: "Progressive bike, 85–95 mins. Mix easy, steady low cadence, tempo, and hard high cadence segments."
+        },
+        {
+          name: "Fri",
+          type: "Rest",
+          text: "Rest day. Check shoe age—old shoes can cause injuries."
+        },
+        {
+          name: "Sat",
+          type: "Bike",
+          text: "Long bike, 2–2.5 hrs. Ride with group, high cadence, relaxed shoulders, heels down. Aim for 1.5–2 × race distance."
+        },
+        {
+          name: "Sun",
+          type: "Run",
+          text: "Easy run, 40–50 mins. Stand tall, high cadence, relaxed shoulders."
+        }
+      ]
+    },
+    {
+      week: 6,
+      block: "Block 2 – Improving speed and endurance",
+      days: [
+        {
+          name: "Mon",
+          type: "Rest",
+          text: "Rest day. Massage or light stretching focusing on glutes, quads, hamstrings."
+        },
+        {
+          name: "Tue",
+          type: "Swim",
+          text: "Tempo swim, 75 mins. 3 × (4 × 100m at race pace, 20s rest) with 2 mins between sets."
+        },
+        {
+          name: "Wed",
+          type: "Run + Core",
+          text: "Technique run, 40–50 mins. 10–15 mins core, then easy run focusing on tall posture and light feet."
+        },
+        {
+          name: "Thu",
+          type: "Bike",
+          text: "Bike hill reps, 75–90 mins. 4–6 × 6–8 min hill at hard intensity, seated, 85–90 cadence."
+        },
+        {
+          name: "Fri",
+          type: "Swim",
+          text: "Steady swim, 60 mins. Long reps (300–600m) working on breathing pattern."
+        },
+        {
+          name: "Sat",
+          type: "Brick",
+          text: "Bike 90 mins–2 hrs steady with 30 mins tempo at end + 30–40 mins run (10–15 mins tempo then easy–steady)."
+        },
+        {
+          name: "Sun",
+          type: "Optional",
+          text: "Optional easy technique session in weakest discipline or full rest if tired."
+        }
+      ]
+    },
+    {
+      week: 7,
+      block: "Block 2 – Improving speed and endurance",
+      days: [
+        {
+          name: "Mon",
+          type: "Swim",
+          text: "Easy swim, 60 mins. Long reps over race distance at easy pace, relaxed in water."
+        },
+        {
+          name: "Tue",
+          type: "Run",
+          text: "Fartlek run, 30–40 mins. 10 mins easy focusing on technique, then 60s tempo / 60s steady for 15–20 mins."
+        },
+        {
+          name: "Wed",
+          type: "Bike",
+          text: "Hilly bike, 75–90 mins. Steady ride in hills."
+        },
+        {
+          name: "Thu",
+          type: "Rest",
+          text: "Rest day."
+        },
+        {
+          name: "Fri",
+          type: "Swim + S&C",
+          text: "Swim session using others to push you. 20–30 mins light S&C for core and swim muscles."
+        },
+        {
+          name: "Sat",
+          type: "Brick",
+          text: "Bike 40 km very easy + 10 km run. Focus on confidence over distance, not speed."
+        },
+        {
+          name: "Sun",
+          type: "Optional",
+          text: "Optional 30–60 mins technique in weakest discipline."
+        }
+      ]
+    },
+    {
+      week: 8,
+      block: "Block 2 – Recovery week",
+      days: [
+        {
+          name: "Mon",
+          type: "Rest",
+          text: "Recovery week. Rest day, good for massage."
+        },
+        {
+          name: "Tue",
+          type: "Swim",
+          text: "Technique swim, 45 mins. Drills and easy swimming, max distance per stroke."
+        },
+        {
+          name: "Wed",
+          type: "Cross",
+          text: "S&C or yoga, 30–40 mins."
+        },
+        {
+          name: "Thu",
+          type: "Run",
+          text: "Easy run, 30–40 mins. Relax shoulders, high cadence, light feet."
+        },
+        {
+          name: "Fri",
+          type: "Bike",
+          text: "Easy bike, 60 mins. Include short 10s sprints with high cadence."
+        },
+        {
+          name: "Sat",
+          type: "Run",
+          text: "Long run, 60–75 mins easy. Aim for 1.2–1.5 × race distance."
+        },
+        {
+          name: "Sun",
+          type: "Rest",
+          text: "Rest day."
+        }
+      ]
+    },
+    // --- Block 3: Weeks 9–12 ---
+    {
+      week: 9,
+      block: "Block 3 – Getting ready to race",
+      days: [
+        {
+          name: "Mon",
+          type: "Swim",
+          text: "Swim with tri club or Masters, 75–90 mins. Easy–steady, longer reps if possible."
+        },
+        {
+          name: "Tue",
+          type: "Run + Core",
+          text: "Progressive run, 50–60 mins. 10 mins light core, then increase pace every 12–15 mins to tempo."
+        },
+        {
+          name: "Wed",
+          type: "Bike",
+          text: "Bike hill reps, 75–90 mins. 4–6 × 4–6 min hill at hard intensity, seated, 85–90 cadence."
+        },
+        {
+          name: "Thu",
+          type: "Rest",
+          text: "Rest day. Bulk of work is done—sleep well and stay on top of nutrition."
+        },
+        {
+          name: "Fri",
+          type: "Swim",
+          text: "Steady swim, 60 mins. 500–400–300–200–100m at steady pace with short recoveries."
+        },
+        {
+          name: "Sat",
+          type: "Brick",
+          text: "Bike 2 hrs progressive (75 mins steady with low cadence, then 45 mins tempo/race pace) + 10–15 mins easy–steady run."
+        },
+        {
+          name: "Sun",
+          type: "Run",
+          text: "Long run, 60–75 mins easy. Start conservatively, gently build pace, finish feeling good."
+        }
+      ]
+    },
+    {
+      week: 10,
+      block: "Block 3 – Getting ready to race",
+      days: [
+        {
+          name: "Mon",
+          type: "Swim + S&C",
+          text: "Squad swim, 60 mins. Use others to push you. 20–30 mins light S&C for core and swim muscles."
+        },
+        {
+          name: "Tue",
+          type: "Run",
+          text: "Easy run, 30–40 mins. Focus on technique. Optional 5–10 mins barefoot on safe surface."
+        },
+        {
+          name: "Wed",
+          type: "Rest",
+          text: "Rest day. Massage or 30 mins stretching. Book bike service and check race equipment."
+        },
+        {
+          name: "Thu",
+          type: "Optional",
+          text: "Optional 60–90 mins long easy session in least confident discipline. Enjoy it, no pressure."
+        },
+        {
+          name: "Fri",
+          type: "Run",
+          text: "Interval run, 50–60 mins. 10 mins build easy–steady, 3–4 × 60–80m accelerations, then 3–5 × 1200m at ~10% faster than race pace."
+        },
+        {
+          name: "Sat",
+          type: "Bike",
+          text: "Steady bike in hills, 90 mins–2 hrs (or simulate on turbo)."
+        },
+        {
+          name: "Sun",
+          type: "Open-water Swim",
+          text: "Open-water swim, 45–60 mins easy, just enjoying the open water."
+        }
+      ]
+    },
+    {
+      week: 11,
+      block: "Block 3 – Taper & sharpening",
+      days: [
+        {
+          name: "Mon",
+          type: "Run",
+          text: "Fartlek run, 30–40 mins. Easy start, then 60s tempo / 60s steady for 12–20 mins."
+        },
+        {
+          name: "Tue",
+          type: "Swim",
+          text: "Easy swim, 45 mins. Long reps over race distance at easy pace. Use wetsuit if possible."
+        },
+        {
+          name: "Wed",
+          type: "Rest",
+          text: "Rest day. Start pre-race visualisation and mentally rehearse race day calmly."
+        },
+        {
+          name: "Thu",
+          type: "Bike",
+          text: "Steady bike, 60 mins. Technique focus, then 20–30 mins steady with smooth pedalling and high cadence."
+        },
+        {
+          name: "Fri",
+          type: "Swim",
+          text: "Tempo + sprint swim, 60 mins. Mix 400–500m tempo 100s and 25m max efforts with 50% recovery."
+        },
+        {
+          name: "Sat",
+          type: "Brick",
+          text: "Bike 90 mins steady with last 20 mins at tempo + 20 mins run (10 mins at race pace, 5 mins easy)."
+        },
+        {
+          name: "Sun",
+          type: "Rest",
+          text: "Rest day. Lie in and relax."
+        }
+      ]
+    },
+    {
+      week: 12,
+      block: "Block 3 – Race week",
+      days: [
+        {
+          name: "Mon",
+          type: "Swim",
+          text: "Swim 30 mins mostly easy. Include 4–5 × 100m at race tempo (20s rest). Use wetsuit in warm-up if racing in one."
+        },
+        {
+          name: "Tue",
+          type: "Rest",
+          text: "Rest day. Light massage or stretching."
+        },
+        {
+          name: "Wed",
+          type: "Bike",
+          text: "Bike 30–40 mins easy. Include 3 × 2 mins at race pace and 3 × 15s hard with plenty of recovery. Check gears and brakes."
+        },
+        {
+          name: "Thu",
+          type: "Rest",
+          text: "Rest day. Light massage or stretching. Get all race kit ready and double-check race info."
+        },
+        {
+          name: "Fri",
+          type: "Run",
+          text: "Easy run, 10–15 mins on soft surface. Include 3 × 30s at race pace. Light stretching and pack race bag."
+        },
+        {
+          name: "Sat",
+          type: "Brick",
+          text: "Easy swim 400–500m with 200–300m at race intensity + easy spin 15–20 mins with 3–5 mins at race pace."
+        },
+        {
+          name: "Sun",
+          type: "Race",
+          text: "RACE DAY! Arrive early, stay calm, and enjoy the experience."
+        }
+      ]
+    }
+  ];
+
+  // --- STORAGE KEYS ---------------------------------------------------
+
+  const STORAGEKEYCHECKS = "triplanchecks_v1";
+  const STORAGEKEYTIMES = "tritimesv1";
+
+  // --- STATE ----------------------------------------------------------
+
+  let checks = loadChecks();
+  let times = loadTimes();
+
+  // --- INIT UI --------------------------------------------------------
+
+  const tabsContainer = document.getElementById("tabs");
+  const content = document.getElementById("content");
+
+  function init() {
+    renderTabs();
+    renderWeekTab(1); // default
+  }
+
+  function renderTabs() {
+    tabsContainer.innerHTML = "";
+
+    // Week tabs
+    PLAN.forEach(weekObj => {
+      const btn = document.createElement("button");
+      btn.className = "tab-btn";
+      btn.textContent = Week ${weekObj.week};
+      btn.dataset.tab = week-${weekObj.week};
+      btn.addEventListener("click", () => {
+        setActiveTab(week-${weekObj.week});
+        renderWeekTab(weekObj.week);
+      });
+      tabsContainer.appendChild(btn);
+    });
+
+    // Progress tab
+    const progressBtn = document.createElement("button");
+    progressBtn.className = "tab-btn";
+    progressBtn.textContent = "Progress & Times";
+    progressBtn.dataset.tab = "progress";
+    progressBtn.addEventListener("click", () => {
+      setActiveTab("progress");
+      renderProgressTab();
+    });
+    tabsContainer.appendChild(progressBtn);
+
+    // Set first active
+    const first = tabsContainer.querySelector(".tab-btn");
+    if (first) first.classList.add("active");
+  }
+
+  function setActiveTab(tabId) {
+    // buttons
+    tabsContainer.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.classList.toggle("active", btn.dataset.tab === tabId);
+    });
+  }
+
+  // --- WEEK TAB RENDERING ---------------------------------------------
+
+  function renderWeekTab(weekNumber) {
+    const weekObj = PLAN.find(w => w.week === weekNumber);
+    if (!weekObj) return;
+
+    content.innerHTML = "";
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "tab-content active";
+
+    const title = document.createElement("h2");
+    title.className = "section-title";
+    title.textContent = Week ${weekObj.week} – ${weekObj.block};
+    wrapper.appendChild(title);
+
+    // Week progress
+    const weekKey = week-${weekObj.week};
+    const totalDays = weekObj.days.length;
+    const completedDays = weekObj.days.filter((day, idx) =>
+      isDayChecked(weekObj.week, idx)
+    ).length;
+    const weekProgress = document.createElement("div");
+    weekProgress.className = "week-progress";
+    weekProgress.innerHTML = `
+      Week completion: ${completedDays}/${totalDays}
+      <div class="progress-bar">
+        <div class="progress-bar-inner" style="width:${(completedDays / totalDays) * 100}%"></div>
+      </div>
+    `;
+    wrapper.appendChild(weekProgress);
+
+    weekObj.days.forEach((day, index) => {
+      const dayDiv = document.createElement("div");
+      dayDiv.className = "day";
+
+      const header = document.createElement("div");
+      header.className = "day-header";
+
+      const left = document.createElement("div");
+      left.innerHTML = `
+        <div class="day-name">${day.name}</div>
+        <div class="day-type">${day.type}</div>
+      `;
+
+      const right = document.createElement("div");
+      right.className = "check-row";
+      const cb = document.createElement("input");
+      cb.type = "checkbox";
+      cb.checked = isDayChecked(weekObj.week, index);
+      cb.addEventListener("change", () => {
+        setDayChecked(weekObj.week, index, cb.checked);
+        renderWeekTab(weekObj.week); // re-render to update progress bar
+      });
+      const label = document.createElement("span");
+      label.textContent = "Completed";
+
+      right.appendChild(cb);
+      right.appendChild(label);
+
+      header.appendChild(left);
+      header.appendChild(right);
+
+      const text = document.createElement("div");
+      text.className = "workout-text";
+      text.textContent = day.text;
+
+      dayDiv.appendChild(header);
+      dayDiv.appendChild(text);
+
+      wrapper.appendChild(dayDiv);
+    });
+
+    content.appendChild(wrapper);
+  }
+
+  // --- PROGRESS TAB RENDERING -----------------------------------------
+
+  function renderProgressTab() {
+    content.innerHTML = "";
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "tab-content active";
+
+    // Logging card
+    const logTitle = document.createElement("h2");
+    logTitle.className = "section-title";
+    logTitle.textContent = "Race Time Logging";
+    wrapper.appendChild(logTitle);
+
+    const logCard = document.createElement("div");
+    logCard.className = "card";
+
+    logCard.innerHTML = `
+      <p>Log your best estimated race-pace times for each discipline. Times are in minutes and seconds.</p>
+      <div class="log-grid">
+        <div>
+          <label>Swim 1500m</label>
+          <div class="inline-inputs">
+            <div>
+              <input type="number" id="swim-min" min="0" placeholder="min" />
+            </div>
+            <div>
+              <input type="number" id="swim-sec" min="0" max="59" placeholder="sec" />
+            </div>
+          </div>
+          <div class="small">Goal: ~${formatTime(GOAL_SPLITS.swim)}</div>
+        </div>
+        <div>
+          <label>Bike 40km</label>
+          <div class="inline-inputs">
+            <div>
+              <input type="number" id="bike-min" min="0" placeholder="min" />
+            </div>
+            <div>
+              <input type="number" id="bike-sec" min="0" max="59" placeholder="sec" />
+            </div>
+          </div>
+          <div class="small">Goal: ~${formatTime(GOAL_SPLITS.bike)}</div>
+        </div>
+        <div>
+          <label>Run 10km</label>
+          <div class="inline-inputs">
+            <div>
+              <input type="number" id="run-min" min="0" placeholder="min" />
+            </div>
+            <div>
+              <input type="number" id="run-sec" min="0" max="59" placeholder="sec" />
+            </div>
+          </div>
+          <div class="small">Goal: ~${formatTime(GOAL_SPLITS.run)}</div>
+        </div>
+        <div>
+          <label>Transitions (T1 + T2)</label>
+          <div class="inline-inputs">
+            <div>
+              <input type="number" id="tran-min" min="0" placeholder="min" />
+            </div>
+            <div>
+              <input type="number" id="tran-sec" min="0" max="59" placeholder="sec" />
+            </div>
+          </div>
+          <div class="small">Goal: ~${formatTime(GOAL_SPLITS.transitions)}</div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="primary" id="save-times">Save Times</button>
+        <button class="secondary" id="reset-times">Reset Times</button>
+      </div>
+    `;
+
+    wrapper.appendChild(logCard);
+
+    // Progress card
+    const progTitle = document.createElement("h2");
+    progTitle.className = "section-title";
+    progTitle.textContent = "Goal Progress (3:00:00 Total)";
+    wrapper.appendChild(progTitle);
+
+    const progCard = document.createElement("div");
+    progCard.className = "card";
+
+    const current = getCurrentTimesSeconds();
+    const totalCurrent = current.swim + current.bike + current.run + current.transitions;
+    const totalGoal = GOALTOTALSECONDS;
+
+    progCard.innerHTML = `
+      <div class="metric-row">
+        <div class="metric-label">Goal Finish Time</div>
+        <div class="metric-value">${formatTime(totalGoal)}</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-label">Your Current Estimate</div>
+        <div class="metric-value">${current.swim === 0 && current.bike === 0 && current.run === 0 && current.transitions === 0 ? "—" : formatTime(totalCurrent)}</div>
+      </div>
+      <div class="metric-bar">
+        <div class="metric-bar-inner" id="total-bar"></div>
+      </div>
+      <div class="small">Bar shows how close your current estimate is to the 3:00:00 goal (lower is better).</div>
+      <hr style="margin:0.6rem 0;border:none;border-top:1px solid #e9ecef;">
+      <div id="split-metrics"></div>
+    `;
+
+    wrapper.appendChild(progCard);
+    content.appendChild(wrapper);
+
+    // Populate inputs from stored times
+    setTimeInputsFromState();
+
+    // Attach handlers
+    document.getElementById("save-times").addEventListener("click", () => {
+      saveTimesFromInputs();
+      renderProgressTab(); // re-render to update bars
+    });
+    document.getElementById("reset-times").addEventListener("click", () => {
+      times = { swim: 0, bike: 0, run: 0, transitions: 0 };
+      saveTimes();
+      renderProgressTab();
+    });
+
+    // Update bars
+    const totalBar = document.getElementById("total-bar");
+    const ratio = totalCurrent > 0 ? Math.min(totalGoal / totalCurrent, 1) : 0;
+    totalBar.style.width = ${ratio * 100}%;
+
+    // Split metrics
+    const splitContainer = document.getElementById("split-metrics");
+    splitContainer.innerHTML = "";
+
+    const splits = [
+      { key: "swim", label: "Swim 1500m", goal: GOAL_SPLITS.swim, value: current.swim },
+      { key: "bike", label: "Bike 40km", goal: GOAL_SPLITS.bike, value: current.bike },
+      { key: "run", label: "Run 10km", goal: GOAL_SPLITS.run, value: current.run },
+      { key: "transitions", label: "Transitions", goal: GOAL_SPLITS.transitions, value: current.transitions }
+    ];
+
+    splits.forEach(s => {
+      const row = document.createElement("div");
+      row.innerHTML = `
+        <div class="metric-row">
+          <div class="metric-label">${s.label}</div>
+          <div class="metric-value">${s.value === 0 ? "—" : formatTime(s.value)} (goal ${formatTime(s.goal)})</div>
+        </div>
+        <div class="metric-bar">
+          <div class="metric-bar-inner" style="width:${s.value > 0 ? Math.min(s.goal / s.value, 1) * 100 : 0}%"></div>
+        </div>
+      `;
+      splitContainer.appendChild(row);
+    });
+  }
+
+  // --- CHECK STORAGE --------------------------------------------------
+
+  function loadChecks() {
+    try {
+      const raw = localStorage.getItem(STORAGEKEYCHECKS);
+      return raw ? JSON.parse(raw) : {};
+    } catch {
+      return {};
+    }
+  }
+
+  function saveChecks() {
+    localStorage.setItem(STORAGEKEYCHECKS, JSON.stringify(checks));
+  }
+
+  function isDayChecked(week, dayIndex) {
+    const key = w${week}-d${dayIndex};
+    return !!checks[key];
+  }
+
+  function setDayChecked(week, dayIndex, value) {
+    const key = w${week}-d${dayIndex};
+    checks[key] = value;
+    saveChecks();
+  }
+
+  // --- TIME STORAGE ---------------------------------------------------
+
+  function loadTimes() {
+    try {
+      const raw = localStorage.getItem(STORAGEKEYTIMES);
+      return raw ? JSON.parse(raw) : { swim: 0, bike: 0, run: 0, transitions: 0 };
+    } catch {
+      return { swim: 0, bike: 0, run: 0, transitions: 0 };
+    }
+  }
+
+  function saveTimes() {
+    localStorage.setItem(STORAGEKEYTIMES, JSON.stringify(times));
+  }
+
+  function getCurrentTimesSeconds() {
+    return {
+      swim: times.swim || 0,
+      bike: times.bike || 0,
+      run: times.run || 0,
+      transitions: times.transitions || 0
+    };
+  }
+
+  function setTimeInputsFromState() {
+    const cur = getCurrentTimesSeconds();
+    const fields = [
+      { key: "swim", minId: "swim-min", secId: "swim-sec" },
+      { key: "bike", minId: "bike-min", secId: "bike-sec" },
+      { key: "run", minId: "run-min", secId: "run-sec" },
+      { key: "transitions", minId: "tran-min", secId: "tran-sec" }
+    ];
+    fields.forEach(f => {
+      const total = cur[f.key];
+      const mins = Math.floor(total / 60);
+      const secs = total % 60;
+      const minEl = document.getElementById(f.minId);
+      const secEl = document.getElementById(f.secId);
+      if (minEl && secEl) {
+        minEl.value = total ? mins : "";
+        secEl.value = total ? secs : "";
+      }
+    });
+  }
+
+  function saveTimesFromInputs() {
+    const fields = [
+      { key: "swim", minId: "swim-min", secId: "swim-sec" },
+      { key: "bike", minId: "bike-min", secId: "bike-sec" },
+      { key: "run", minId: "run-min", secId: "run-sec" },
+      { key: "transitions", minId: "tran-min", secId: "tran-sec" }
+    ];
+    fields.forEach(f => {
+      const minEl = document.getElementById(f.minId);
+      const secEl = document.getElementById(f.secId);
+      const mins = parseInt(minEl.value || "0", 10);
+      const secs = parseInt(secEl.value || "0", 10);
+      const total = Math.max(0, mins * 60 + secs);
+      times[f.key] = total;
+    });
+    saveTimes();
+  }
+
+  // --- UTIL -----------------------------------------------------------
+
+  function formatTime(seconds) {
+    const s = Math.max(0, Math.round(seconds));
+    const h = Math.floor(s / 3600);
+    const m = Math.floor((s % 3600) / 60);
+    const sec = s % 60;
+    if (h > 0) {
+      return ${h}:${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")};
+    }
+    return ${m}:${String(sec).padStart(2, "0")};
+  }
+
+  // --- START ----------------------------------------------------------
+
+  init();
+</script>
+</body>
+</html>
+`
